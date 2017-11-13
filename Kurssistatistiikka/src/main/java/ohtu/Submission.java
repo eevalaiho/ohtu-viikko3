@@ -3,7 +3,10 @@ package ohtu;
 import java.util.Arrays;
 
 public class Submission {
+
     private int[] exercises;
+    private int week;
+    private int hours;
 
     public void setExercises(int[] exercises) {
         this.exercises = exercises;
@@ -13,8 +16,6 @@ public class Submission {
         return exercises;
     }
 
-    private int week;
-
     public void setWeek(int week) {
         this.week = week;
     }
@@ -22,8 +23,6 @@ public class Submission {
     public int getWeek() {
         return week;
     }
-
-    private int hours;
 
     public void setHours(int hours) {
         this.hours = hours;
@@ -33,10 +32,11 @@ public class Submission {
         return hours;
     }
 
-    @Override
-    public String toString() {
+    public String toString(int maximum) {
+
         return "viikko " + week
                 + ": tehtyjä tehtäviä yhteensä: " + exercises.length
+                + " (maksimi " + maximum + ")"
                 + ", aikaa kului " + hours + " tuntia, "
                 + "tehdyt tehtävät: " + Arrays.toString(exercises);
     }
