@@ -35,7 +35,7 @@ public class Submission {
     public String toString(int maximum) {
 
         return "viikko " + week
-                + ": tehtyjä tehtäviä yhteensä: " + exercises.length
+                + ":\n    tehtyjä tehtäviä yhteensä: " + exercises.length
                 + " (maksimi " + maximum + ")"
                 + ", aikaa kului " + hours + " tuntia, "
                 + "tehdyt tehtävät: " + Arrays.toString(exercises);
