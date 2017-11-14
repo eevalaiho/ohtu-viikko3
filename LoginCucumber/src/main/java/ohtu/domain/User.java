@@ -1,6 +1,6 @@
 package ohtu.domain;
 
-public class User {
+public class User implements IUser {
 
     private String username;
     private String password;

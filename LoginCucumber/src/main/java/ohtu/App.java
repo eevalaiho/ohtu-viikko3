@@ -5,25 +5,44 @@ import ohtu.data_access.UserDao;
 import ohtu.io.ConsoleIO;
 import ohtu.io.IO;
 import ohtu.services.AuthenticationService;
+import ohtu.services.IAuthenticationService;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class App {
 
     private IO io;
-    private AuthenticationService auth;
+    private IAuthenticationService auth;
 
-    public App(IO io, AuthenticationService auth) {
+    public void setIO(IO io) {
         this.io = io;
+    }
+
+    public void setIAuthenticationService(IAuthenticationService auth) {
         this.auth = auth;
     }
+
+    public App() {}
 
     public String[] ask() {
         String[] userPwd = new String[2];
         userPwd[0] = io.readLine("username:");
-        userPwd[1] = io.readLine("password:");
+        userPwd[1] = io.readLine("rpassword:");
         return userPwd;
     }
 
     public void run() {
+        if (io == null)
+            io = new ConsoleIO();
+
+        if (auth == null) {
+            auth = new AuthenticationService();
+            auth.setUserDao(new InMemoryUserDao());
+        }
+
         while (true) {
             String command = io.readLine("komento (new tai login):");
 
@@ -47,15 +66,13 @@ public class App {
                     io.print("wrong username or password");
                 }
             }
-
         }
     }
 
     public static void main(String[] args) {
-        UserDao dao = new InMemoryUserDao();
-        IO io = new ConsoleIO();
-        AuthenticationService auth = new AuthenticationService(dao);
-        new App(io, auth).run();
+        ApplicationContext ctx = new FileSystemXmlApplicationContext("src/main/resources/spring-context.xml");
+        App app = (App) ctx.getBean("app");
+        app.run();
     }
     
     // testejä debugatessa saattaa olla hyödyllistä testata ohjelman ajamista

@@ -1,20 +1,27 @@
 package ohtu.services;
 
+import ohtu.domain.IUser;
 import ohtu.domain.User;
 import java.util.ArrayList;
 import java.util.List;
 import ohtu.data_access.UserDao;
 
-public class AuthenticationService {
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class AuthenticationService implements IAuthenticationService {
 
     private UserDao userDao;
 
-    public AuthenticationService(UserDao userDao) {
+    public AuthenticationService() { }
+
+    public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }
 
     public boolean logIn(String username, String password) {
-        for (User user : userDao.listAll()) {
+        for (IUser user : userDao.listAll()) {
             if (user.getUsername().equals(username)
                     && user.getPassword().equals(password)) {
                 return true;

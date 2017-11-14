@@ -14,9 +14,13 @@ public class Stepdefs {
     App app;
     StubIO io;
     UserDao userDao = new InMemoryUserDao();
-    AuthenticationService auth = new AuthenticationService(userDao);
+    AuthenticationService auth = new AuthenticationService();
     List<String> inputLines = new ArrayList<>();
-    
+
+    public void setUp() {
+        auth.setUserDao(userDao);
+    }
+
     @Given("^command login is selected$")
     public void command_login_selected() throws Throwable {
         inputLines.add("login");
@@ -24,11 +28,16 @@ public class Stepdefs {
 
     @When("^username \"([^\"]*)\" and password \"([^\"]*)\" are entered$")
     public void a_username_and_password_are_entered(String username, String password) throws Throwable {
-       inputLines.add(username);
+        setUp();
+
+        inputLines.add(username);
        inputLines.add(password);
        
-       io = new StubIO(inputLines); 
-       app = new App(io, auth);
+       io = new StubIO();
+       io.setLines(inputLines);
+       app = new App();
+       app.setIO(io);
+       app.setIAuthenticationService(auth);
        app.run();
     }
 
@@ -44,11 +53,15 @@ public class Stepdefs {
 
     @Given("^user \"([^\"]*)\" with password \"([^\"]*)\" is created$")
     public void user_with_password_is_created(String username, String password) throws Throwable {
+        setUp();
         inputLines.add(username);
         inputLines.add(password);
 
-        io = new StubIO(inputLines);
-        app = new App(io, auth);
+        io = new StubIO();
+        io.setLines(inputLines);
+        app = new App();
+        app.setIO(io);
+        app.setIAuthenticationService(auth);
         app.run();
     }
 

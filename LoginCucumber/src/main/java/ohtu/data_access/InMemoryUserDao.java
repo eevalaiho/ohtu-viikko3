@@ -1,26 +1,27 @@
 package ohtu.data_access;
 
+import ohtu.domain.IUser;
 import ohtu.domain.User;
 import java.util.ArrayList;
 import java.util.List;
 
 public class InMemoryUserDao implements UserDao {
 
-    private List<User> users;
+    private List<IUser> users;
 
     public InMemoryUserDao() {
-        users = new ArrayList<User>();
+        users = new ArrayList<IUser>();
         users.add(new User("pekka", "akkep"));
     }        
 
     @Override
-    public List<User> listAll() {
+    public List<IUser> listAll() {
         return users;
     }
 
     @Override
-    public User findByName(String name) {
-        for (User user : users) {
+    public IUser findByName(String name) {
+        for (IUser user : users) {
             if (user.getUsername().equals(name)) {
                 return user;
             }
@@ -30,15 +31,15 @@ public class InMemoryUserDao implements UserDao {
     }
 
     @Override
-    public void add(User user) {
+    public void add(IUser user) {
         users.add(user);
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(List<IUser> users) {
         this.users = users;
     }
 
-    public List<User> getUsers() {
+    public List<IUser> getUsers() {
         return users;
     }
 }
