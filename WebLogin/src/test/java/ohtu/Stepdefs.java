@@ -95,8 +95,6 @@ public class Stepdefs {
         element.sendKeys(password);
         element = driver.findElement(By.name("passwordConfirmation"));
         element.sendKeys(passwordConfirmation);
-
-        sleep(5);
         element = driver.findElement(By.name("signup"));
         element.submit();
     }
@@ -123,9 +121,28 @@ public class Stepdefs {
         sleep(5);
     }
 
+    @Given("^user with username \"([^\"]*)\" with password \"([^\"]*)\" is successfully created$")
+    public void user_with_username_with_password_is_successfully_created(String username, String password) throws Throwable {
+        command_new_user_is_selected();
+        a_valid_username_and_password_and_password_confirmation_are_entered(username, password, password);
+        a_new_user_is_created();
+    }
 
-
-
+    @Given("^user with username \"([^\"]*)\" and password \"([^\"]*)\" is tried to be created$")
+    public void user_with_username_and_password_is_tried_to_be_created(String username, String password) throws Throwable {
+        command_new_user_is_selected();
+        too_short_username_and_password_and_matching_password_confirmation_are_entered(username, password);
+        sleep(2);
+        WebElement element = driver.findElement(By.linkText("back to home"));
+        element.click();
+        sleep(2);
+        login_selected();
+        sleep(2);
+        username_and_password_are_given(username, password);
+        sleep(2);
+        user_is_not_logged_in_and_error_message_is_given();
+        sleep(2);
+    }
 
     @After
     public void tearDown(){
