@@ -15,5 +15,6 @@
     <orderEntry type="library" name="Gradle: org.seleniumhq.selenium:selenium-api:2.41.0" level="project" />
     <orderEntry type="library" name="Gradle: info.cukes:cucumber-core:1.2.5" level="project" />
     <orderEntry type="library" name="Gradle: info.cukes:cucumber-junit:1.2.5" level="project" />
+    <orderEntry type="library" name="Gradle: junit:junit:4.12" level="project" />
   </component>
 </module>
